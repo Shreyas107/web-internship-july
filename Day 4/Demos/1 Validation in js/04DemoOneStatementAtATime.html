@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" onclick="ShowDialog()" value="Do Something" />
+
+    <script>
+      function Print() {
+        console.log("Something...");
+      }
+
+      //Print();
+
+      //debugger;
+      console.log("Hi");
+      //  setTimeout() evaluates an expression after a specified number of milliseconds.
+      var somethingReturned = window.setTimeout(Print, 5000);
+
+      console.log("something returned from setTimeOut = " + somethingReturned);
+
+      console.log("Bye");
+    </script>
+
+    <script>
+      function ShowDialog() {
+        alert("Hi");
+      }
+    </script>
+  </body>
+</html>

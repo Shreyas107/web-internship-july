@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Functional Programming</title>
+  </head>
+  <body>
+    <script>
+      //Functional Programming:
+      //1: Normal Function Writing
+      //2: Function Inside Variable
+      //3: Literal Syntax of Class Writing
+      //3.1: Copying reference
+      //3.2: Inheritance using __proto__
+      //3.3: Object.keys to find members of Class
+      //4: Constructor Function Syntax of Class Writing
+      //4.1 Creating Object
+      //5: Class Keyword Syntax of Class Writing
+      //5.1: Inheritance
+      //5.2: Using https://babeljs.io/ for ECMA 6 to Older version
+
+      //--------------------------------------------------
+      //-----------------Normal Function Writing
+      //--------------------------------------------------
+
+      //   function SayHi(name) {
+      //     console.log("Hi " + name);
+      //   }
+      //   debugger;
+      //   SayHi("mahesh");
+
+      //--------------------------------------------------
+      //-----------------Function inside variable
+      //--------------------------------------------------
+
+      //   const SayHi = function (name) {
+      //     console.log("Hi " + name);
+      //   };
+
+      //   SayHi = 100;
+
+      //   SayHi("nilesh");
+      //   debugger;
+      //   console.log(typeof SayHi);
+
+      //-----------------------------------------------------
+      //----------------Literal Syntax Of Writing Class In JS
+      //-----------------------------------------------------
+
+      //debugger;
+      //   var Person = {
+      //     Name: "Mahesh",
+      //     Address: "Pune",
+      //     Print: function () {
+      //       console.log(this.Name + this.Address);
+      //     },
+      //   };
+
+      //---------------------------referring Person's members-----
+      //  console.log(Person.Name);
+      //   Person.Name = "Nilesh";
+      //   console.log(Person.Name);
+      //   Person.Print();
+
+      //------------------------------Copying reference----------
+      //   var person2 = Person;     ///This copies a reference into person2
+      //   person2.Name = "Hitesh";
+      //   console.log(Person.Name);
+      //   console.log(person2.Name);
+
+      //------------------------------Inheritance----------
+
+      //   var Employee = {
+      //     Dept: "IT",
+      //     Print: function () {
+      //       console.log(this.Name + this.Address + this.Dept);
+      //     },
+      //   };
+
+      //   Employee.Dept = "HR";
+      //   Employee.__proto__ = Person;
+
+      //   var allKeysInEmployee = Object.keys(Employee);
+      //   for (i = 0; i < allKeysInEmployee.length; i++) {
+      //     console.log(allKeysInEmployee[i]);
+      //   }
+
+      //  // console.log(Employee.Name);
+      //   //   Employee.Print();
+
+      //-----------------------------------------------------
+      //---Constructor Function Syntax Of Writing Class In JS
+      //-----------------------------------------------------
+
+      //   var Person = function (name, address) {
+      //     this.Name = name;
+      //     this.Address = address;
+      //     this.Print = function () {
+      //       console.log(this.Name + this.Address);
+      //     };
+      //   };
+
+      //   var person1 = new Person("mahesh", "pune");
+      //   var person2 = new Person("nilesh", "chennai");
+      //   person1.Print();
+      //   person2.Print();
+
+      //---------------------------------------------------------------
+      //---Class Keyword Syntax Of Writing Class In JS: ECMA 6: Year2015
+      //----------------------------------------------------------------
+
+      // class Person {
+      //   constructor(name, address) {
+      //     this.Name = name;
+      //     this.Address = address;
+      //   }
+
+      //   Print() {
+      //     console.log(this.Name + this.Address);
+      //   }
+      // }
+
+      // var person1 = new Person("mahesh", "pune");
+      // var person2 = new Person("nilesh", "chennai");
+      // //   person1.Print();
+      // //   person2.Print();
+
+      // var allKeysFromPerson = Object.keys(person1);
+      // //debugger;
+      // console.log("Keys from Person");
+      // for (i = 0; i < allKeysFromPerson.length; i++) {
+      //   console.log(allKeysFromPerson[i]);
+      // }
+
+      // class Employee extends Person {
+      //   constructor(name, address, dept) {
+      //     super(name, address);
+      //     this.Dept = dept;
+      //   }
+
+      //   Print() {
+      //     console.log(this.Name + this.Address + this.Dept);
+      //   }
+      // }
+
+      // var employee1 = new Employee("mahesh", "pune", "IT");
+      // var employee2 = new Employee("nilesh", "chennai", "HR");
+      // //   employee1.Print();
+      // //   employee2.Print();
+
+      // var allKeysFromEmployee = Object.keys(employee1);
+      // //debugger;
+      // console.log("Keys from Employee");
+      // for (i = 0; i < allKeysFromEmployee.length; i++) {
+      //   console.log(allKeysFromEmployee[i]);
+      // }
+    </script>
+  </body>
+</html>

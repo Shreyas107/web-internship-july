@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //1: Passing Function as a parameter
+      //-------------------------------------------------------
+      //   function OnPassCallMe() {
+      //     console.log("Great! U Cleared Exam");
+      //   }
+
+      //   function OnFailCallMe() {
+      //     console.log("Great! You have another chance now!");
+      //   }
+
+      //   function ABC() {
+      //     console.log("U r great");
+      //   }
+      //   function XYZ() {
+      //     console.log("U r super great");
+      //   }
+
+      //   function PrintResult(f1, f2) {
+      //     var marks = 18;
+
+      //     if (marks > 16) {
+      //       f1();
+      //       //   console.log("Pass");
+      //     } else {
+      //       f2();
+      //       //   console.log("Fail");
+      //     }
+      //   }
+      //   debugger;
+
+      //   PrintResult(OnPassCallMe, OnFailCallMe);
+      //   PrintResult(ABC, XYZ);
+
+      //-------------------------------------------------------
+      //2: Returning Function as a return value
+      //-------------------------------------------------------
+
+      function GetMeDrink(temp) {
+        var HaveCoke = function () {
+          console.log("Coke");
+        };
+
+        var HaveTea = function () {
+          console.log("Tea");
+        };
+
+        if (temp > 30) {
+          return HaveCoke;
+        } else {
+          return HaveTea;
+        }
+      }
+
+      debugger;
+
+      //   var Drink = GetMeDrink(35);
+
+      var Drink = GetMeDrink(20);
+      Drink();
+    </script>
+  </body>
+</html>

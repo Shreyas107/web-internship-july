@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <center>
+      <table border="1" style="width: 300px">
+        <tr>
+          <td>Name</td>
+          <td>
+            <input type="text" id="txtName" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>Address</td>
+          <td>
+            <input type="text" id="txtAddress" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>EMail</td>
+          <td>
+            <input type="text" id="txtEMail" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="button" value="Add Record" onclick="Add()" />
+          </td>
+          <td>
+            <input type="button" value="Reset" onclick="Reset()" />
+          </td>
+        </tr>
+      </table>
+      <br />
+      <hr />
+
+      <table id="myTable" style="width: 400px; text-align: center" border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>EMail</th>
+          </tr>
+        </thead>
+        <tbody id="myTableBody"></tbody>
+      </table>
+    </center>
+    <script>
+      function Reset() {
+        var refToTxtName = document.getElementById("txtName");
+        var refToTxtAddress = document.getElementById("txtAddress");
+        var refToTxtEMail = document.getElementById("txtEMail");
+        refToTxtName.value = "";
+        refToTxtAddress.value = "";
+        refToTxtEMail.value = "";
+      }
+      function Add() {
+        var refToTxtName = document.getElementById("txtName");
+        var refToTxtAddress = document.getElementById("txtAddress");
+        var refToTxtEMail = document.getElementById("txtEMail");
+
+        var name = refToTxtName.value;
+        var address = refToTxtAddress.value;
+        var email = refToTxtEMail.value;
+
+        var refTomyTableBody = document.getElementById("myTableBody");
+        // var row =
+        //   "<tr>" +
+        //   "<td>" +
+        //   name +
+        //   "</td>" +
+        //   "<td>" +
+        //   address +
+        //   "</td>" +
+        //   "<td>" +
+        //   email +
+        //   "</td>" +
+        //   "</tr>";
+
+        var row = `<tr>
+                        <td>${name}</td>
+                        <td>${address}</td>
+                        <td>${email}</td>
+                   </tr>`;
+
+        refTomyTableBody.innerHTML = refTomyTableBody.innerHTML + row;
+      }
+    </script>
+    <script>
+      //1: let & const keyword
+      //--------------------------------------------------------------
+      // : Problem with VAR keyword : code : Look for output
+      //--------------------------------------------------------------
+      //   var counter = 0;
+
+      //   console.log("Global Counter = " + counter);
+
+      //   function KeepCounting() {
+      //     var counter = 100;
+      //     counter = counter + 1;
+      //     console.log("KeepCounting Counter before if = " + counter);
+
+      //     if (true) {
+      //       var counter = 555;
+      //       console.log("if loop counter = " + counter);
+      //     }
+
+      //     console.log("KeepCounting Counter after if = " + counter);
+      //   }
+      //   KeepCounting();
+      //   counter = counter + 1;
+      //   console.log("Global Counter = " + counter);
+
+      //--------------------------------------------------------------
+      // : Problem Solved with let keyword : code : Look for output
+      //--------------------------------------------------------------
+
+      //   var counter = 0;
+
+      //   console.log("Global Counter = " + counter);
+
+      //   function KeepCounting() {
+      //     let counter = 100;
+      //     counter = counter + 1;
+      //     console.log("KeepCounting Counter before if = " + counter);
+
+      //     if (true) {
+      //       let counter = 555;
+      //       console.log("if loop counter = " + counter);
+      //     }
+
+      //     console.log("KeepCounting Counter after if = " + counter);
+      //   }
+      //   KeepCounting();
+      //   counter = counter + 1;
+      //   console.log("Global Counter = " + counter);
+
+      //--------------------------------------------------------------
+      //Problem with var keyword & solution with const keyword.
+      //--------------------------------------------------------------
+      //   var v = function () {
+      //     console.log("hi");
+      //   };
+
+      //   const v = function () {
+      //     console.log("hi");
+      //   };
+
+      //   //.........few lines after
+      //   v = 100;
+      //   //10000 lines code here...
+      //   v();
+
+      //--------------------------------------------------------------
+      //2: Spread operator  or ... operator
+      //--------------------------------------------------------------
+      //Purpose 1:
+
+      //   var person1 = { Name: "Mahesh", Address: "Pune" };
+      //   console.log("Person1 " + person1.Name + person1.Address);
+
+      //   var person2 = person1;   //This copies a reference
+
+      //   var person2 = { ...person1 }; //This copies entire object
+      //   person2.Name = "Nilesh"; //From new object we changed Name
+
+      //Above 2 lines combined in 1 line below:
+
+      //   var person2 = { ...person1, Name: "Nilesh" };
+
+      //   console.log("Person2 " + person2.Name + person2.Address);
+      //   console.log("Person1 " + person1.Name + person1.Address);
+
+      //--------------------------------------------------------------
+      //Purpose 2:
+
+      //   var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+      //   var players = ["Rohit", "Virat", "Rahul"];
+
+      //   var Nos = [7, 10, 45, 11];
+
+      //   var misc = ["Test1", ...days, "Test2", ...players, "Test3", ...Nos];
+
+      //   debugger;
+      //   for (let index = 0; index < misc.length; index++) {
+      //     var element = misc[index];
+      //     console.log(element);
+      //   }
+
+      //--------------------------------------------------------------
+      //3: Template Literal Syntax
+      //--------------------------------------------------------------
+
+      //Example 1:
+      //   var name = "sunbeam";
+      //   var address = "pune";
+      //   var age = 25;
+
+      //   //   var message = name + " from " + address + " completed " + age + " years";
+
+      //   var message = `${name} from ${address} completed ${age} years`;
+
+      //   console.log(message);
+
+      //Example 2:
+    </script>
+  </body>
+</html>
