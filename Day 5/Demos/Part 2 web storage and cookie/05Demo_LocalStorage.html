@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="divMessage"></div>
+
+    <script>
+      var refTodivMessage = document.getElementById("divMessage");
+      var name = window.localStorage.getItem("Name");
+      var address = window.localStorage.getItem("Address");
+      refTodivMessage.innerHTML = `<h1>Welcome ${name} from ${address}</h1>`;
+    </script>
+  </body>
+</html>

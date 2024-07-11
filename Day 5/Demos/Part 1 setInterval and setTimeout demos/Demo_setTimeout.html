@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    <img src="images/img32.jpg" style="height: 100px; width: 100px" id="img1" />
+    <br />
+    <img src="images/img33.jpg" style="height: 100px; width: 100px" id="img2" />
+    <br />
+    <input type="button" value="Move" onclick="Move()" />
+    <br />
+
+    <input type="button" value="MoveAgain" onclick="Move2()" />
+    <br />
+
+    <input type="button" value="Disturb" onclick="Disturb()" />
+    <br />
+    <script>
+      function Disturb() {
+        alert("Let us disturb!");
+      }
+      var counter = 0;
+      var counter2 = 0;
+
+      function Move() {
+        setCounter();
+      }
+
+      function Move2() {
+        setCounter2();
+      }
+
+      function setCounter() {
+        counter = counter + 10;
+        var refToImage = document.getElementById("img1");
+        refToImage.style.marginLeft = counter + "px";
+        window.setTimeout(setCounter, 500);
+      }
+
+      function setCounter2() {
+        counter2 = counter2 + 10;
+        var refToImage2 = document.getElementById("img2");
+        refToImage2.style.marginLeft = counter2 + "px";
+        window.setTimeout(setCounter2, 300);
+      }
+    </script>
+  </body>
+</html>

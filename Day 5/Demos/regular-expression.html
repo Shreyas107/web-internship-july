@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Matching Literal Characters
+      let regex1 = /hello/;
+      let str1 = "hello world";
+      console.log("str1 ", regex1.test(str1)); // true
+
+      let regex2 = /hello/i; // 'i' flag makes it case insensitive
+      let str2 = "Hello world";
+      console.log("str2 ", regex2.test(str2)); // true
+
+      let regex3 = /\d+/; // + means one or more digits
+      let str3 = "There are 123 apples";
+      console.log("str3 ", regex3.test(str3)); // true
+
+      let regex4 = /a{2,4}/; // matches 'a' between 2 and 4 times
+      let str4 = "aaa";
+      console.log("str4 ", regex4.test(str4)); // true
+
+      function validateEmail(email) {
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
+
+      console.log(validateEmail("test@example.com")); // true
+      console.log(validateEmail("invalid-email")); // false
+
+      let regexPhoneNo = /^\d{10}$/;
+
+      function validatePhoneNumber(phoneNumber) {
+        return regexPhoneNo.test(phoneNumber);
+      }
+
+      console.log(validatePhoneNumber("1234567890")); // true
+      console.log(validatePhoneNumber("123456789")); // false (9 digits)
+      console.log(validatePhoneNumber("12345678901")); // false (11 digits)
+      console.log(validatePhoneNumber("123-456-7890")); // false (non-digit characters)
+
+      let regexForPassword = /^\d{5,15}$/;
+
+      function validatePassword(password) {
+        return regexForPassword.test(password);
+      }
+
+      console.log(validatePhoneNumber("1234567890")); // true (10 digits)
+      console.log(validatePhoneNumber("123456789012345")); // true (15 digits)
+      console.log(validatePhoneNumber("123456789")); // false (9 digits)
+      console.log(validatePhoneNumber("1234567890123456")); // false (16 digits)
+    </script>
+  </body>
+</html>

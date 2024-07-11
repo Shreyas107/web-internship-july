@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>test Set Interval</title>
+  </head>
+  <body>
+    <input type="button" value="Call Increase" onclick="CallIncrease()" />
+
+    <input type="button" value="Stop Increase" onclick="StopIncrease()" />
+    <script>
+      var counter = 0;
+      var queueNo = undefined;
+      function Increase() {
+        counter = counter + 1;
+        console.log(counter);
+      }
+
+      function CallIncrease() {
+        //Increase();
+        queueNo = window.setInterval(Increase, 1000);
+        console.log("Queue Created with Number = " + queueNo);
+      }
+
+      function StopIncrease() {
+        console.log("Queue getting cleared is = " + queueNo);
+        window.clearInterval(queueNo);
+      }
+    </script>
+  </body>
+</html>

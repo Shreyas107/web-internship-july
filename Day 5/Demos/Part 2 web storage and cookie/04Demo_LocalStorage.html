@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+  <body>
+    Name: <input type="text" id="txtName" /> <br />
+    Address: <input type="text" id="txtAddress" /> <br />
+    <input type="button" value="Store" onclick="Store()" />
+    <a href="05Demo_LocalStorage.html">Go To ANother Page</a>
+    <script>
+      function Store() {
+        var refToTxtName = document.getElementById("txtName");
+        var refToTxtAddress = document.getElementById("txtAddress");
+        var Name = refToTxtName.value;
+        var Address = refToTxtAddress.value;
+
+        window.localStorage.setItem("Name", Name);
+        window.localStorage.setItem("Address", Address);
+      }
+    </script>
+  </body>
+</html>

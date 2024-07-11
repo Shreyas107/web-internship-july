@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>test Set Interval</title>
+  </head>
+  <body>
+    <img src="car.png" height="100px" width="100px" id="myCar" />
+    <br />
+    Gear :
+    <div id="divGr"></div>
+    <br />
+
+    <input type="button" value="Call Increase" onclick="CallIncrease()" />
+
+    <input type="button" value="Stop Increase" onclick="StopIncrease()" />
+
+    <input type="button" value="Traffic Jam" onclick="Jam()" />
+    <script>
+      var counter = 0;
+      var queueNos = new Array();
+
+      function Jam() {
+        alert("Jam!");
+      }
+      function Increase() {
+        var refToMyCar = document.getElementById("myCar");
+
+        counter = counter + 1;
+        console.log(counter);
+
+        refToMyCar.style.marginLeft = counter + "px";
+      }
+
+      function CallIncrease() {
+        var refTodivGr = document.getElementById("divGr");
+        var queueNo = window.setInterval(Increase, 500);
+        refTodivGr.innerText = queueNo;
+
+        queueNos.push(queueNo);
+        console.log("Queue Created with Number = " + queueNo);
+      }
+
+      function StopIncrease() {
+        var refTodivGr = document.getElementById("divGr");
+        var queueNo = queueNos.pop();
+
+        if (queueNo != undefined) {
+          console.log("Queue getting cleared is = " + queueNo);
+          refTodivGr.innerText = queueNo;
+
+          window.clearInterval(queueNo);
+        } else {
+          console.log("No queue is avaialble to clear");
+          refTodivGr.innerText = "Start the car first!";
+        }
+      }
+    </script>
+  </body>
+</html>
