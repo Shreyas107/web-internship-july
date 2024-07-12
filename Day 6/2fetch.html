@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch Usernames</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0 auto;
+        width: 300px;
+      }
+
+      li {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      li:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Fetch Usernames Example</h1>
+
+    <button id="fetchButton">Fetch Usernames</button>
+
+    <!-- List to display the fetched usernames -->
+    <ul id="userList"></ul>
+
+    <script>
+      console.log("====================================");
+      console.log(fetch("https://jsonplaceholder.typicode.com/users"));
+
+      fetch("https://jsonplaceholder.typicode.com/users").then((res) => {
+        console.log(res.json());
+      });
+
+      console.log("====================================");
+
+      document
+        .getElementById("fetchButton")
+        .addEventListener("click", fetchUsernames);
+
+      // Function to fetch usernames when the button is clicked
+      function fetchUsernames() {
+        // Use the Fetch API to make a GET request to the specified URL
+        fetch("https://jsonplaceholder.typicode.com/users")
+          // Handle the response using .then() method
+          .then((response) => {
+            // Check if the response status is OK (status code 200-299)
+            if (!response.ok) {
+              // If not OK, throw an error
+              throw new Error("Network response was not ok");
+            }
+            // Parse the JSON response and return it
+            // it converts JSON response to JS object
+            return response.json();
+          })
+          // Handle the parsed JSON data
+          .then((data) => {
+            const userList = document.getElementById("userList");
+            // Clear any existing content in the <ul>
+            userList.innerHTML = "";
+            // Iterate over the fetched user data
+            data.forEach((user) => {
+              // Create a new <li> element for each username
+              const listItem = document.createElement("li");
+              // Set the text content of the <li> to the username
+              listItem.textContent = user.username;
+              // Append the <li> to the <ul>
+              userList.appendChild(listItem);
+            });
+          })
+          // Handle any errors that occurred during the fetch operation
+          .catch((error) => {
+            // Log the error to the console
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      }
+    </script>
+  </body>
+</html>

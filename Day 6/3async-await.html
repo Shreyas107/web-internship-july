@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch Data Example</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="p-3">
+    <h1 class="mb-4">Fetch Data Example</h1>
+
+    <button id="fetchWithPromises" class="btn btn-primary mr-2">
+      Fetch Data with Promises
+    </button>
+    <button id="fetchWithAsyncAwait" class="btn btn-success">
+      Fetch Data with Async/Await
+    </button>
+
+    <div id="dataContainer" class="mt-4"></div>
+
+    <script>
+      // Add event listeners to the buttons to call the respective functions on click
+      document
+        .getElementById("fetchWithPromises")
+        .addEventListener("click", fetchDataWithPromises);
+      document
+        .getElementById("fetchWithAsyncAwait")
+        .addEventListener("click", fetchDataWithAsyncAwait);
+
+      // Function to fetch data using Promises
+      function fetchDataWithPromises() {
+        // Make a GET request to the API endpoint
+        fetch("https://jsonplaceholder.typicode.com/users")
+          .then((response) => {
+            // Check if the response is OK (status code 200-299)
+            if (!response.ok) {
+              // If not, throw an error
+              throw new Error("Network response was not ok");
+            }
+            // Parse the response JSON data
+            return response.json();
+          })
+          .then((data) => {
+            // Call the displayUsernames function to update the DOM with the fetched data
+            displayUsernames(data);
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the fetch
+            console.error("Fetch error:", error);
+            document.getElementById("dataContainer").innerHTML =
+              '<div class="alert alert-danger" role="alert">Fetch error: ' +
+              error +
+              "</div>";
+          });
+      }
+
+      // Function to fetch data using async/await
+      async function fetchDataWithAsyncAwait() {
+        try {
+          // Make a GET request to the API endpoint and wait for the response
+          const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+          // Check if the response is OK (status code 200-299)
+          if (!response.ok) {
+            // If not, throw an error
+            throw new Error("Network response was not ok");
+          }
+          // Parse the response JSON data
+          const data = await response.json();
+          // Call the displayUsernames function to update the DOM with the fetched data
+          displayUsernames(data);
+        } catch (error) {
+          // Handle any errors that occurred during the fetch
+          console.error("Fetch error:", error);
+          document.getElementById("dataContainer").innerHTML =
+            '<div class="alert alert-danger" role="alert">Fetch error: ' +
+            error +
+            "</div>";
+        }
+      }
+
+      // Function to display the usernames in the DOM
+      function displayUsernames(users) {
+        // Map over the users array to create a list of usernames
+        const userList = users
+          .map((user) => `<li class="list-group-item">${user.username}</li>`)
+          .join("");
+        // Update the dataContainer element with the list of usernames
+        document.getElementById(
+          "dataContainer"
+        ).innerHTML = `<ul class="list-group">${userList}</ul>`;
+      }
+    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
