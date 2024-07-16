@@ -1,0 +1,1 @@
+function Change(){var e=document.getElementsByTagName("input");for(i=0;i<e.length;i++){var t=e[i];"text"==t.type&&(t.style.backgroundColor="red")}}
