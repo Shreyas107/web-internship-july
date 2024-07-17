@@ -1,0 +1,6 @@
+-- Query to join three tables - students, courses and enrollments
+-- and displaying all the students names which are present in enrollments tables along with the course name.
+
+SELECT s.student_id,s.student_name, course_name, enrollment_date 
+FROM students as s, courses c, enrollments e 
+WHERE e.course_id = c.course_id and s.student_id = e.student_id;
