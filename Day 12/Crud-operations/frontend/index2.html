@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Data</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Student Data</h1>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Add Student</h5>
+          <form id="add-student-form">
+            <div class="form-group">
+              <label for="student-name">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="student-name"
+                placeholder="Enter name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="student-email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="student-email"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Add Student</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <button id="fetch-students" class="btn btn-primary mb-3">
+          Fetch Students
+        </button>
+        <table id="student-table" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#fetch-students").click(function () {
+          fetchStudents();
+        });
+
+        $("#add-student-form").submit(function (event) {
+          event.preventDefault();
+          addStudent();
+        });
+      });
+
+      function fetchStudents() {
+        fetch("http://localhost:5000/user/students", {
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywidXNlcl9uYW1lIjoidWVyMTIiLCJ1c2VyX2VtYWlsIjoidXNlcjEyQG1haWwuY29tIiwiaWF0IjoxNzIxMzYxMzgyfQ.LbxiCaPI6mmrQdRG0-nK9LDTvB-8VRCYjMAOj0WODv8",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              const students = data.data;
+              const tableBody = $("#student-table tbody");
+              tableBody.empty(); // Clear previous data
+
+              students.forEach((student) => {
+                const row = `
+                            <tr>
+                                <td>${student.id}</td>
+                                <td class="editable" contenteditable="false">${student.name}</td>
+                                <td class="editable" contenteditable="false">${student.email}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn" data-id="${student.id}">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn" data-id="${student.id}">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                tableBody.append(row);
+              });
+
+              // Attach click event handlers for edit and delete buttons
+              $(".edit-btn").click(function () {
+                const id = $(this).data("id");
+                const row = $(this).closest("tr");
+                if ($(this).text() === "Edit") {
+                  row.find(".editable").attr("contenteditable", "true").focus();
+                  $(this).text("Save");
+                } else {
+                  const updatedName = row.find("td").eq(1).text();
+                  const updatedEmail = row.find("td").eq(2).text();
+                  editStudent(id, updatedName, updatedEmail);
+                  row.find(".editable").attr("contenteditable", "false");
+                  $(this).text("Edit");
+                }
+              });
+
+              $(".delete-btn").click(function () {
+                const id = $(this).data("id");
+                deleteStudent(id);
+              });
+            } else {
+              alert("Failed to fetch student data.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching student data:", error);
+            alert("Error fetching student data.");
+          });
+      }
+
+      function addStudent() {
+        const name = $("#student-name").val();
+        const email = $("#student-email").val();
+
+        fetch("http://localhost:5000/user/students", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywidXNlcl9uYW1lIjoidWVyMTIiLCJ1c2VyX2VtYWlsIjoidXNlcjEyQG1haWwuY29tIiwiaWF0IjoxNzIxMzYxMzgyfQ.LbxiCaPI6mmrQdRG0-nK9LDTvB-8VRCYjMAOj0WODv8",
+          },
+          body: JSON.stringify({ name: name, email: email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Student added successfully.");
+              fetchStudents();
+              $("#add-student-form")[0].reset();
+            } else {
+              alert("Failed to add student.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error adding student:", error);
+            alert("Error adding student.");
+          });
+      }
+
+      function editStudent(id, name, email) {
+        fetch(`http://localhost:5000/user/students/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywidXNlcl9uYW1lIjoidWVyMTIiLCJ1c2VyX2VtYWlsIjoidXNlcjEyQG1haWwuY29tIiwiaWF0IjoxNzIxMzYxMzgyfQ.LbxiCaPI6mmrQdRG0-nK9LDTvB-8VRCYjMAOj0WODv8",
+          },
+          body: JSON.stringify({ name: name, email: email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Student updated successfully.");
+              fetchStudents();
+            } else {
+              alert("Failed to update student.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating student:", error);
+            alert("Error updating student.");
+          });
+      }
+
+      function deleteStudent(id) {
+        fetch(`http://localhost:5000/user/students/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization:
+              "Bearer " +
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywidXNlcl9uYW1lIjoidWVyMTIiLCJ1c2VyX2VtYWlsIjoidXNlcjEyQG1haWwuY29tIiwiaWF0IjoxNzIxMzYxMzgyfQ.LbxiCaPI6mmrQdRG0-nK9LDTvB-8VRCYjMAOj0WODv8",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Student deleted successfully.");
+              fetchStudents();
+            } else {
+              alert("Failed to delete student.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting student:", error);
+            alert("Error deleting student.");
+          });
+      }
+    </script>
+  </body>
+</html>
