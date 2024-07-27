@@ -1,12 +1,13 @@
 const mysql = require("mysql2/promise");
 
 // Create a connection to the database
+// mysql ---- nodejs
 async function main() {
   const connection = await mysql.createConnection({
     host: "localhost",
-    user: "username",
-    password: "password",
-    database: "databasename",
+    user: "root",
+    password: "shreyas",
+    database: "july",
   });
 
   console.log("Connected to the MySQL server.");

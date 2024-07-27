@@ -7,4 +7,4 @@ function Sub(x, y) {
 }
 
 // exporting module Add
-module.exports = Add;
+module.exports = Sub;

@@ -7,6 +7,7 @@ console.log(typeof v);
 v = true;
 console.log(typeof v);
 
+var v;
 v = undefined;
 console.log(typeof v);
 

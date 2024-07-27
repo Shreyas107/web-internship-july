@@ -2,18 +2,30 @@ const express = require("express");
 const cors = require("cors");
 const { pool } = require("./db.js");
 
+// mysql --- nodejs --- server
+
+// 1st option --> browser -> html + fetch() weather
+// 2nd option --> postman
+// browser(frontend) --- postman --- server()
+
+// Create an instance of the express application
 const app = express();
 const port = 5000;
 
+// Middleware to parse incoming JSON requests
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
-// GET all users
+// Define a GET endpoint to retrieve all users from the database
 app.get("/users", async (req, res) => {
   try {
+    // Perform a query to select all users from the 'users' table
     const [rows] = await pool.query("SELECT * FROM users");
+
+    // Send the result of the query as a JSON response
     res.json(rows);
   } catch (err) {
+    // If an error occurs, send a 500 status code with the error message
     res.status(500).json({ error: err.message });
   }
 });

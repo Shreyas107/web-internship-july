@@ -17,7 +17,7 @@ class Person {
   }
 
   Print() {
-    console.log(this.No + this.Name);
+    console.log(this.No + " " + this.Name);
   }
 }
 

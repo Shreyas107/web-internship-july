@@ -1,8 +1,8 @@
 // Define variables
 const dbHost = "localhost";
-const dbUser = "";
-const dbPassword = "";
-const dbName = "";
+const dbUser = "root";
+const dbPassword = "shreyas";
+const dbName = "intern";
 
 // Export variables as an object
 module.exports = {
