@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Login Form</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <style>
+      .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar-container"></div>
+    <div class="container">
+      <div class="login-container card shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center">Staff Login</h3>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="Enter email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mb-2">
+              Staff Login
+            </button>
+            <a href="register.html" class="w-50">
+              <button type="button" class="btn btn-primary w-100">
+                Register
+              </button>
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#navbar-container").load("navbars/navbar.html", function () {
+          // Set the text color of navbar items to white
+          $("#navbarNav .nav-link").css("color", "#6c757d");
+          $(".navbar-brand").css("color", "white");
+        });
+
+        $("#loginForm").submit(function (event) {
+          event.preventDefault();
+
+          // Get form elements
+          const email = $("#email").val();
+          const password = $("#password").val();
+
+          // Send data to the backend
+          fetch("http://127.0.0.1:7000/staff/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                // Check for specific error messages and display appropriate toastr messages
+                if (data.error === "Invalid email") {
+                  toastr.error("Invalid email!");
+                } else if (data.error === "Invalid password") {
+                  toastr.error("Invalid password!");
+                } else {
+                  toastr.error(data.error);
+                }
+              } else {
+                // Handle the response data
+                console.log("Success:", data);
+                toastr.success("Login successful!");
+
+                // Store the token in local storage
+                localStorage.setItem("token", data.data.token);
+
+                // Decode the token to get the user role
+                const decodedToken = jwt_decode(data.data.token);
+                const role = decodedToken.role;
+
+                console.log("role-", role);
+                // Redirect based on the role
+                switch (role) {
+                  case "student":
+                    window.location.href = "student/student-home.html";
+                    break;
+                  case "admin":
+                    window.location.href = "admin/admin-home.html";
+                    break;
+                  case "coordinator":
+                    window.location.href = "coco/coco-home.html";
+                    break;
+                  case "staff":
+                    window.location.href = "staff/staff-home.html";
+                    break;
+                  default:
+                    window.location.href = "login.html";
+                    break;
+                }
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              toastr.error("Login failed!");
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
